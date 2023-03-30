@@ -1,9 +1,11 @@
 # BulletinBoard
 Web bulletin board service utilizing spring boot framework.
 
-<br><br>
+<br>
 
 ### Commit 규칙
+
+---
 
 #### Commit 기본 형식
 
