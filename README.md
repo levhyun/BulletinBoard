@@ -1,11 +1,9 @@
 # BulletinBoard
 Web bulletin board service utilizing spring boot framework.
 
-<br>
+<br><br>
 
 ### Commit 규칙
-
----
 
 #### Commit 기본 형식
 
@@ -30,6 +28,8 @@ Web bulletin board service utilizing spring boot framework.
 | ⏪ | `:rewind:` |            작업 되돌리기              |
 | 🚑 |   `:ambulance:`    |          긴급 수정             |
 | 🙈 | `:see_no_evil:`  | .gitignore 추가/수정 |
+
+<br><br>
 
 ### Version 규칙
 
