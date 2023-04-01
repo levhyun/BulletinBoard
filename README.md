@@ -3,6 +3,19 @@ Web bulletin board service utilizing spring boot framework.
 
 <br><br>
 
+### API 명세서 & 주요 기능
+
+| Index |             URL             | Description |
+|:-----:|:---------------------------:|:-----------:|
+|   1   |    /bulletin-board/write    |     글쓰기     |
+|   2   |       /bulletin-board       |     글목록     |
+|   3   |    /bulletin-board/{id}     |     글조회     |
+|   4   | /bulletin-board/update/{id} |     글수정     |
+|   5   | /bulletin-board/delete/{id} |     글삭제     |
+|   6   |   /bulletin-board/paging    |    페이징처리    |
+
+<br><br>
+
 ### Commit 규칙
 
 #### Commit 기본 형식
