@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>list</title>
+  <link rel="stylesheet" href="/css/list.css">
+</head>
+<body>
+  <h1>Post List</h1>
+  <button>
+    <a href="/">index</a>
+  </button>
+  <br><br>
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>title</th>
+        <th>writer</th>
+        <th>date</th>
+        <th>hits</th>
+      </tr>
+    </thead>
+      <tbody>
+      <tr th:each="bulletinBoard: ${bulletinBoardList}">
+        <td th:text="${bulletinBoard.id}"></td>
+        <td><a th:href="@{|/bulletinBoard/${bulletinBoard.id}|}" th:text="${bulletinBoard.title}"></a></td>
+        <td th:text="${bulletinBoard.writer}"></td>
+        <td th:text="*{#temporals.format(bulletinBoard.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${bulletinBoard.hits}"></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

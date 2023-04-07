@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>write</title>
+    <link rel="stylesheet" href="/css/write.css">
+</head>
+<body>
+    <h1>Post List</h1>
+    <button>
+        <a href="/">index</a>
+    </button>
+    <br><br>
+    <form action="/bulletin-board/write" method="post" enctype="multipart/form-data">
+        writer: <input type="text" name="writer"> <br>
+        pass: <input type="text" name="pass"> <br>
+        title: <input type="text" name="title"> <br>
+        contents: <textarea name="contents" cols="30" rows="10"></textarea> <br>
+        <input type="submit" value="글작성">
+    </form>
+</body>
+</html>

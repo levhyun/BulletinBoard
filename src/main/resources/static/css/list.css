@@ -1,0 +1,24 @@
+table {
+    width: 100%;
+    border: 1px solid #444444;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #444444;
+    padding: 7px;
+    text-align: center;
+}
+thead tr {
+    background-color: #252525;
+    color: #ffffff;
+}
+tbody tr:nth-child(2n) {
+    background-color: #cdcdcd;
+}
+tbody tr:nth-child(2n+1) {
+    background-color: #efefef;
+}
+
+button > a {
+    text-decoration-line: none;
+}
