@@ -5,10 +5,7 @@ import com.springboot.bulletinboard.service.BulletinBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,13 @@ public class BulletinBoardController {
         List<BulletinBoardDto> bulletinBoardDtoList = bulletinBoardService.findAllPosts();
         model.addAttribute("bulletinBoardList", bulletinBoardDtoList);
         return "list";
+    }
+
+    @GetMapping("/{id}")
+    public String post(@PathVariable Long id, Model model) {
+        bulletinBoardService.updateHits(id);
+        BulletinBoardDto bulletinBoardDto = bulletinBoardService.findPost(id);
+        model.addAttribute("bulletinBoard", bulletinBoardDto);
+        return "detail";
     }
 }

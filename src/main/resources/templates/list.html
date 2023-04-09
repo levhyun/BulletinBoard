@@ -21,10 +21,10 @@
         <th>hits</th>
       </tr>
     </thead>
-      <tbody>
+    <tbody>
       <tr th:each="bulletinBoard: ${bulletinBoardList}">
         <td th:text="${bulletinBoard.id}"></td>
-        <td><a th:href="@{|/bulletinBoard/${bulletinBoard.id}|}" th:text="${bulletinBoard.title}"></a></td>
+        <td><a th:href="@{|/bulletin-board/${bulletinBoard.id}|}" th:text="${bulletinBoard.title}"></a></td>
         <td th:text="${bulletinBoard.writer}"></td>
         <td th:text="*{#temporals.format(bulletinBoard.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
         <td th:text="${bulletinBoard.hits}"></td>
