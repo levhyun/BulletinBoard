@@ -20,6 +20,14 @@ public class BulletinBoardDto {
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
 
+    public BulletinBoardDto(Long id, String writer, String title, int hits, LocalDateTime createdTime) {
+        this.id = id;
+        this.writer = writer;
+        this.title = title;
+        this.hits = hits;
+        this.createdTime = createdTime;
+    }
+
     public static BulletinBoardDto toBulletinBoardDto(BulletinBoardEntity bulletinBoardEntity) {
         BulletinBoardDto bulletinBoardDto = new BulletinBoardDto();
         bulletinBoardDto.setId(bulletinBoardEntity.getId());

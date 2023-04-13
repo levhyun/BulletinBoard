@@ -38,4 +38,15 @@ public class BulletinBoardEntity extends BaseEntity {
         bulletinBoardEntity.setHits(0);
         return bulletinBoardEntity;
     }
+
+    public static BulletinBoardEntity toUpdateEntity(BulletinBoardDto bulletinBoardDto) {
+        BulletinBoardEntity bulletinBoardEntity = new BulletinBoardEntity();
+        bulletinBoardEntity.setId(bulletinBoardDto.getId());
+        bulletinBoardEntity.setWriter(bulletinBoardDto.getWriter());
+        bulletinBoardEntity.setPass(bulletinBoardDto.getPass());
+        bulletinBoardEntity.setTitle(bulletinBoardDto.getTitle());
+        bulletinBoardEntity.setContents(bulletinBoardDto.getContents());
+        bulletinBoardEntity.setHits(bulletinBoardDto.getHits());
+        return bulletinBoardEntity;
+    }
 }

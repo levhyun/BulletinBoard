@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>paging</title>
+  <script src="/js/paging.js" defer></script>
+  <link rel="stylesheet" href="/css/paging.css">
+</head>
+<body>
+  <h1 th:text="${nowPageNumber}"></h1>
+  <button>
+    <a href="/">index</a>
+  </button>
+  <button onclick="writePost()">글작성</button>
+  <br><br>
+  <table>
+    <thead>
+      <tr>
+        <th>id</th>
+        <th>title</th>
+        <th>writer</th>
+        <th>date</th>
+        <th>hits</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr th:each="bulletinBoard: ${bulletinBoardList}">
+        <td th:text="${bulletinBoard.id}"></td>
+        <td><a th:href="@{|/bulletin-board/${bulletinBoard.id}|(page=${bulletinBoardList.number + 1})}" th:text="${bulletinBoard.title}"></a></td>
+        <td th:text="${bulletinBoard.writer}"></td>
+        <td th:text="*{#temporals.format(bulletinBoard.createdTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${bulletinBoard.hits}"></td>
+      </tr>
+    <tbody>
+  </table>
+  <br><br>
+  <div id="pageMove">
+    <a class="pageMoveButton" th:href="@{/bulletin-board/paging(page=1)}">◀</a>
+    <a class="pageMoveButton" th:href="${bulletinBoardList.first} ? '#' : @{/bulletin-board/paging(page=${bulletinBoardList.number})}">이전</a>
+    <span th:each="page: ${#numbers.sequence(startPageNumber, endPageNumber)}">
+        <span class="pageMoveButton" id="pageOneButton" th:if="${page == bulletinBoardList.number + 1}" th:text="${page}"></span>
+        <span th:unless="${page == bulletinBoardList.number + 1}">
+            <a class="pageMoveButton" id="pageNumberButton" th:href="@{/bulletin-board/paging(page=${page})}" th:text="${page}"></a>
+        </span>
+    </span>
+    <a class="pageMoveButton" th:href="${bulletinBoardList.last} ? '#' : @{/bulletin-board/paging(page=${bulletinBoardList.number + 2})}">다음</a>
+    <a class="pageMoveButton" th:href="@{/bulletin-board/paging(page=${bulletinBoardList.totalPages})}">▶</a>
+  </div>
+</body>
+</html>

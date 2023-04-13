@@ -3,6 +3,9 @@ const WritePost = () => {
 }
 
 const PostList = () => {
-
     location.href = '/bulletin-board/';
+}
+
+const PagingReq = () => {
+    location.href = '/bulletin-board/paging';
 }

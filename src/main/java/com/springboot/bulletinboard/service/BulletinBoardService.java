@@ -5,6 +5,10 @@ import com.springboot.bulletinboard.entity.BulletinBoardEntity;
 import com.springboot.bulletinboard.repository.BulletinBoardRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -42,5 +46,22 @@ public class BulletinBoardService {
         } else {
             return null;
         }
+    }
+
+    public BulletinBoardDto updatePostValue(BulletinBoardDto bulletinBoardDto) {
+        BulletinBoardEntity bulletinBoardEntity = BulletinBoardEntity.toUpdateEntity(bulletinBoardDto);
+        bulletinBoardRepository.save(bulletinBoardEntity);
+        return findPost(bulletinBoardDto.getId());
+    }
+
+    public void delete(Long id) {
+        bulletinBoardRepository.deleteById(id);
+    }
+
+    public Page<BulletinBoardDto> paging(Pageable pageable) {
+        int page = pageable.getPageNumber() - 1;
+        int pageLimit = 3;
+        Page<BulletinBoardEntity> bulletinBoardEntities = bulletinBoardRepository.findAll(PageRequest.of(page, pageLimit, Sort.by(Sort.Direction.DESC, "id")));
+        return bulletinBoardEntities.map(bulletinBoard -> new BulletinBoardDto(bulletinBoard.getId(), bulletinBoard.getWriter(), bulletinBoard.getTitle(), bulletinBoard.getHits(), bulletinBoard.getCreatedTime()));
     }
 }
