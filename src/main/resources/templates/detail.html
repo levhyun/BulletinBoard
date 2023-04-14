@@ -28,6 +28,7 @@
         <th>date</th>
         <th>hits</th>
         <th>contents</th>
+        <th>image</th>
       </tr>
     </thead>
     <tbody>
@@ -38,6 +39,9 @@
         <td th:text="${bulletinBoard.createdTime}"></td>
         <td th:text="${bulletinBoard.hits}"></td>
         <td th:text="${bulletinBoard.contents}"></td>
+        <td th:if="${bulletinBoard.fileAttached == 1}" th:each="fileName: ${bulletinBoard.storedFileName}">
+          <img th:src="@{|/upload/${fileName}|}" alt="">
+        </td>
       </tr>
     <tbody>
   </table>

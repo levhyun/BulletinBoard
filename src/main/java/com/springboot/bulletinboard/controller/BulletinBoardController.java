@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -23,7 +24,7 @@ public class BulletinBoardController {
     }
 
     @PostMapping("/write")
-    public String write(@ModelAttribute BulletinBoardDto bulletinBoardDto) {
+    public String write(@ModelAttribute BulletinBoardDto bulletinBoardDto) throws IOException {
         System.out.println("bulletinBoardDto = " + bulletinBoardDto);
         bulletinBoardService.write(bulletinBoardDto);
         return "index";

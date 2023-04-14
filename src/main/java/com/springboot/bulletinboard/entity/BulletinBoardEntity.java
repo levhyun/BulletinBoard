@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -29,6 +32,12 @@ public class BulletinBoardEntity extends BaseEntity {
     @Column
     private int hits;
 
+    @Column
+    private int fileAttached;
+
+    @OneToMany(mappedBy = "bulletinBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BulletinBoardFileEntity> bulletinBoardFileEntityList = new ArrayList<>();
+
     public static BulletinBoardEntity toSaveEntity(BulletinBoardDto bulletinBoardDto) {
         BulletinBoardEntity bulletinBoardEntity = new BulletinBoardEntity();
         bulletinBoardEntity.setWriter(bulletinBoardDto.getWriter());
@@ -36,6 +45,7 @@ public class BulletinBoardEntity extends BaseEntity {
         bulletinBoardEntity.setTitle(bulletinBoardDto.getTitle());
         bulletinBoardEntity.setContents(bulletinBoardDto.getContents());
         bulletinBoardEntity.setHits(0);
+        bulletinBoardEntity.setFileAttached(0);
         return bulletinBoardEntity;
     }
 
@@ -47,6 +57,17 @@ public class BulletinBoardEntity extends BaseEntity {
         bulletinBoardEntity.setTitle(bulletinBoardDto.getTitle());
         bulletinBoardEntity.setContents(bulletinBoardDto.getContents());
         bulletinBoardEntity.setHits(bulletinBoardDto.getHits());
+        return bulletinBoardEntity;
+    }
+
+    public static BulletinBoardEntity toSaveFileEntity(BulletinBoardDto bulletinBoardDto) {
+        BulletinBoardEntity bulletinBoardEntity = new BulletinBoardEntity();
+        bulletinBoardEntity.setWriter(bulletinBoardDto.getWriter());
+        bulletinBoardEntity.setPass(bulletinBoardDto.getPass());
+        bulletinBoardEntity.setTitle(bulletinBoardDto.getTitle());
+        bulletinBoardEntity.setContents(bulletinBoardDto.getContents());
+        bulletinBoardEntity.setHits(0);
+        bulletinBoardEntity.setFileAttached(1);
         return bulletinBoardEntity;
     }
 }

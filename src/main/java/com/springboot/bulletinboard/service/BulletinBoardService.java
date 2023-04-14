@@ -2,6 +2,8 @@ package com.springboot.bulletinboard.service;
 
 import com.springboot.bulletinboard.dto.BulletinBoardDto;
 import com.springboot.bulletinboard.entity.BulletinBoardEntity;
+import com.springboot.bulletinboard.entity.BulletinBoardFileEntity;
+import com.springboot.bulletinboard.repository.BulletinBoardFileRepository;
 import com.springboot.bulletinboard.repository.BulletinBoardRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,11 +24,29 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class BulletinBoardService {
     private final BulletinBoardRepository bulletinBoardRepository;
-    public void write(BulletinBoardDto bulletinBoardDto) {
-        BulletinBoardEntity bulletinBoardEntity = BulletinBoardEntity.toSaveEntity(bulletinBoardDto);
-        bulletinBoardRepository.save(bulletinBoardEntity);
+    private final BulletinBoardFileRepository bulletinBoardFileRepository;
+
+    public void write(BulletinBoardDto bulletinBoardDto) throws IOException {
+        if (bulletinBoardDto.getFile().isEmpty()) {
+            BulletinBoardEntity bulletinBoardEntity = BulletinBoardEntity.toSaveEntity(bulletinBoardDto);
+            bulletinBoardRepository.save(bulletinBoardEntity);
+        } else {
+            BulletinBoardEntity bulletinBoardEntity = BulletinBoardEntity.toSaveFileEntity(bulletinBoardDto);
+            Long savedId = bulletinBoardRepository.save(bulletinBoardEntity).getId();
+            BulletinBoardEntity board = bulletinBoardRepository.findById(savedId).get();
+            for (MultipartFile file: bulletinBoardDto.getFile()) {
+                String originalFilename = file.getOriginalFilename();
+                String storedFileName = System.currentTimeMillis() + " " + originalFilename;
+                String savePath = "C:\\springboot_img\\" + storedFileName;
+                file.transferTo(new File(savePath));
+
+                BulletinBoardFileEntity bulletinBoardFileEntity = BulletinBoardFileEntity.toBulletinBoardFileEntity(board, originalFilename, storedFileName);
+                bulletinBoardFileRepository.save(bulletinBoardFileEntity);
+            }
+        }
     }
 
+    @Transactional
     public List<BulletinBoardDto> findAllPosts() {
         List<BulletinBoardEntity> bulletinBoardEntityList = bulletinBoardRepository.findAll();
         List<BulletinBoardDto> bulletinBoardDtoList = new ArrayList<>();
@@ -38,6 +61,7 @@ public class BulletinBoardService {
         bulletinBoardRepository.updateHits(id);
     }
 
+    @Transactional
     public BulletinBoardDto findPost(Long id) {
         Optional<BulletinBoardEntity> optionalBulletinBoardEntity = bulletinBoardRepository.findById(id);
         if (optionalBulletinBoardEntity.isPresent()) {

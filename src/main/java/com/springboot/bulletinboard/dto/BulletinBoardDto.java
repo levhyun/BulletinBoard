@@ -1,9 +1,13 @@
 package com.springboot.bulletinboard.dto;
 
 import com.springboot.bulletinboard.entity.BulletinBoardEntity;
+import com.springboot.bulletinboard.entity.BulletinBoardFileEntity;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -19,6 +23,11 @@ public class BulletinBoardDto {
     private int hits;
     private LocalDateTime createdTime;
     private LocalDateTime updatedTime;
+
+    private List<MultipartFile> file;
+    private List<String> originalFileName;
+    private List<String> storedFileName;
+    private int fileAttached;
 
     public BulletinBoardDto(Long id, String writer, String title, int hits, LocalDateTime createdTime) {
         this.id = id;
@@ -38,6 +47,19 @@ public class BulletinBoardDto {
         bulletinBoardDto.setHits(bulletinBoardEntity.getHits());
         bulletinBoardDto.setCreatedTime(bulletinBoardEntity.getCreatedTime());
         bulletinBoardDto.setUpdatedTime(bulletinBoardEntity.getUpdatedTime());
+        if (bulletinBoardEntity.getFileAttached() == 0) {
+            bulletinBoardDto.setFileAttached(bulletinBoardEntity.getFileAttached());
+        } else {
+            List<String> originalFileNameList = new ArrayList<>();
+            List<String> storedFileNameList = new ArrayList<>();
+            bulletinBoardDto.setFileAttached(bulletinBoardEntity.getFileAttached());
+            for (BulletinBoardFileEntity bulletinBoardFileEntity: bulletinBoardEntity.getBulletinBoardFileEntityList()) {
+                originalFileNameList.add(bulletinBoardFileEntity.getOriginalFileName());
+                storedFileNameList.add(bulletinBoardFileEntity.getStoredFileName());
+            }
+            bulletinBoardDto.setOriginalFileName(originalFileNameList);
+            bulletinBoardDto.setStoredFileName(storedFileNameList);
+        }
         return bulletinBoardDto;
     }
 }
