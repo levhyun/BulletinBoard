@@ -22,3 +22,17 @@ tbody tr:nth-child(2n+1) {
 button > a {
     text-decoration-line: none;
 }
+
+#image {
+    width: 100px;
+    height: 100px;
+}
+
+#writeComment {
+    display: flex;
+    justify-content: space-between;
+}
+
+#content {
+    width: 1400px;
+}

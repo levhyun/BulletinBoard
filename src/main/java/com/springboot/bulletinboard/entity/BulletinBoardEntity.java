@@ -38,6 +38,9 @@ public class BulletinBoardEntity extends BaseEntity {
     @OneToMany(mappedBy = "bulletinBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<BulletinBoardFileEntity> bulletinBoardFileEntityList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "bulletinBoardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<CommentEntity> commentEntityList = new ArrayList<>();
+
     public static BulletinBoardEntity toSaveEntity(BulletinBoardDto bulletinBoardDto) {
         BulletinBoardEntity bulletinBoardEntity = new BulletinBoardEntity();
         bulletinBoardEntity.setWriter(bulletinBoardDto.getWriter());

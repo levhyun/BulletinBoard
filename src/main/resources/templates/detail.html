@@ -5,6 +5,7 @@
   <title>detail</title>
   <script src="/js/detail.js" defer></script>
   <link rel="stylesheet" href="/css/detail.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
   <script th:inline="javascript">
@@ -40,10 +41,20 @@
         <td th:text="${bulletinBoard.hits}"></td>
         <td th:text="${bulletinBoard.contents}"></td>
         <td th:if="${bulletinBoard.fileAttached == 1}" th:each="fileName: ${bulletinBoard.storedFileName}">
-          <img th:src="@{|/upload/${fileName}|}" alt="">
+          <img id="image" th:src="@{|/upload/${fileName}|}" alt="">
         </td>
       </tr>
     <tbody>
   </table>
+  <br><br>
+  <div id="writeComment">
+    <input type="text" id="writer" placeholder="작성자">
+    <input type="text" id="content" placeholder="내용">
+    <button id="writeCommentButton" onclick="writeComment()">댓글작성</button>
+  </div>
+  <br>
+  <div id="commentList">
+    
+  </div>
 </body>
 </html>
