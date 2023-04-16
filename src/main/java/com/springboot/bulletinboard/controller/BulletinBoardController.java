@@ -1,7 +1,9 @@
 package com.springboot.bulletinboard.controller;
 
 import com.springboot.bulletinboard.dto.BulletinBoardDto;
+import com.springboot.bulletinboard.dto.CommentDto;
 import com.springboot.bulletinboard.service.BulletinBoardService;
+import com.springboot.bulletinboard.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +20,8 @@ import java.util.List;
 @RequestMapping("/bulletin-board")
 public class BulletinBoardController {
     private final BulletinBoardService bulletinBoardService;
+    private final CommentService commentService;
+
     @GetMapping("/write")
     public String writeFrom() {
         return "write";
@@ -41,6 +45,8 @@ public class BulletinBoardController {
     public String post(@PathVariable Long id, Model model, @PageableDefault(page = 1) Pageable pageable) {
         bulletinBoardService.updateHits(id);
         BulletinBoardDto bulletinBoardDto = bulletinBoardService.findPost(id);
+        List<CommentDto> commentDtoList = commentService.findAll(id);
+        model.addAttribute("commentList", commentDtoList);
         model.addAttribute("bulletinBoard", bulletinBoardDto);
         model.addAttribute("page", pageable.getPageNumber());
         return "detail";
